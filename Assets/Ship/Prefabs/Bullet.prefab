@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3240374624611067718
+--- !u!1 &8498699971734355534
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,25 +8,25 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3240374624611067716}
-  - component: {fileID: 3240374624611067719}
-  - component: {fileID: 3240374624611067717}
-  - component: {fileID: 2678266485891651204}
-  - component: {fileID: 2482336889550183448}
-  m_Layer: 0
-  m_Name: Asteroid
+  - component: {fileID: 8498699971734355506}
+  - component: {fileID: 8498699971734355533}
+  - component: {fileID: 8498699971734355507}
+  - component: {fileID: 8498699971734355532}
+  - component: {fileID: 8498699971734355505}
+  m_Layer: 10
+  m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3240374624611067716
+--- !u!4 &8498699971734355506
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3240374624611067718}
+  m_GameObject: {fileID: 8498699971734355534}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -34,34 +34,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3240374624611067719
+--- !u!114 &8498699971734355533
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3240374624611067718}
+  m_GameObject: {fileID: 8498699971734355534}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31f26ef7440880f41aa86941c89114a0, type: 3}
+  m_Script: {fileID: 11500000, guid: dee03b9a30e93274aac68d7a3c9adfc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minHeight: 0.5
-  minRadius: 0.5
-  maxRadius: 2
-  vertexCountToRadiusRatio: 15
-  minImpactImpulseForDestruction: 5
-  minDebrisCountToRadiusRatio: 2
-  maxDebrisCountToRadiusRatio: 3
-  minDebrisSeparationVelocity: 1
-  maxDebrisSeparationVelocity: 2
---- !u!120 &3240374624611067717
+  velocity: 7
+  timeToLive: 3
+--- !u!120 &8498699971734355507
 LineRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3240374624611067718}
+  m_GameObject: {fileID: 8498699971734355534}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -96,8 +89,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 0.2, y: 0, z: 0}
+  - {x: -0.2, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.03
@@ -152,35 +145,35 @@ LineRenderer:
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 0
-  m_Loop: 1
---- !u!50 &2678266485891651204
+  m_Loop: 0
+--- !u!50 &8498699971734355532
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3240374624611067718}
+  m_GameObject: {fileID: 8498699971734355534}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 1
+  m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0
+  m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
---- !u!60 &2482336889550183448
-PolygonCollider2D:
+  m_Constraints: 4
+--- !u!61 &8498699971734355505
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3240374624611067718}
+  m_GameObject: {fileID: 8498699971734355534}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -197,6 +190,6 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - []
+  serializedVersion: 2
+  m_Size: {x: 0.4, y: 0.03}
+  m_EdgeRadius: 0

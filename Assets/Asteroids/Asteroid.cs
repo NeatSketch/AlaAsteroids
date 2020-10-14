@@ -2,6 +2,7 @@
 
 [RequireComponent(typeof(LineRenderer))]
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(PolygonCollider2D))]
 public class Asteroid : MonoBehaviour
 {
     [SerializeField] private float minHeight = default;
@@ -13,6 +14,7 @@ public class Asteroid : MonoBehaviour
     [SerializeField] private float maxDebrisCountToRadiusRatio = default;
     [SerializeField] private float minDebrisSeparationVelocity = default;
     [SerializeField] private float maxDebrisSeparationVelocity = default;
+    [SerializeField] private float debrisSeparationDistanceMultiplier = default;
 
     private LineRenderer lineRenderer;
     private new Rigidbody2D rigidbody2D;
@@ -78,6 +80,9 @@ public class Asteroid : MonoBehaviour
     /// </summary>
     public void Vanish()
     {
+        // Disable the GameObject right away so it doesn't interact with colliders
+        gameObject.SetActive(false);
+
         Destroy(gameObject);
     }
 
@@ -92,28 +97,31 @@ public class Asteroid : MonoBehaviour
         int maxDebrisCount = Mathf.RoundToInt(maxDebrisCountToRadiusRatio * radius);
         int debrisCount = Random.Range(minDebrisCount, maxDebrisCount);
 
-        float debrisRadius = radius / Mathf.Sqrt(debrisCount);
-
-        float debrisSeparationAngle = 2f * Mathf.PI * Random.value;
-        float debrisSeparationVelocity = Random.Range(minDebrisSeparationVelocity, maxDebrisSeparationVelocity);
-
-        for (int i = 0; i < debrisCount; i++)
+        if (debrisCount > 1)
         {
-            debrisSeparationAngle += 2f * Mathf.PI / debrisCount;
-            Vector2 debrisDirection = Quaternion.Euler(0f, 0f, Mathf.Rad2Deg * debrisSeparationAngle) * Vector2.right;
+            float debrisRadius = radius / Mathf.Sqrt(debrisCount);
 
-            GameObject debrisGO = Instantiate
-            (
-                gameObject,
-                transform.position + (Vector3)(debrisRadius * debrisDirection),
-                Quaternion.identity
-            );
-            Asteroid debris = debrisGO.GetComponent<Asteroid>();
-            debris.Init(debrisRadius);
+            float debrisSeparationAngle = 2f * Mathf.PI * Random.value;
+            float debrisSeparationVelocity = Random.Range(minDebrisSeparationVelocity, maxDebrisSeparationVelocity);
 
-            Rigidbody2D debrisRigidbody = debrisGO.GetComponent<Rigidbody2D>();
-            debrisRigidbody.velocity = rigidbody2D.velocity + debrisSeparationVelocity * debrisDirection;
-            debrisRigidbody.angularVelocity = rigidbody2D.angularVelocity;
+            for (int i = 0; i < debrisCount; i++)
+            {
+                debrisSeparationAngle += 2f * Mathf.PI / debrisCount;
+                Vector2 debrisDirection = Quaternion.Euler(0f, 0f, Mathf.Rad2Deg * debrisSeparationAngle) * Vector2.right;
+
+                GameObject debrisGO = Instantiate
+                (
+                    gameObject,
+                    transform.position + (Vector3)(debrisSeparationDistanceMultiplier * debrisRadius * debrisDirection),
+                    Quaternion.identity
+                );
+                Asteroid debris = debrisGO.GetComponent<Asteroid>();
+                debris.Init(debrisRadius);
+
+                Rigidbody2D debrisRigidbody = debrisGO.GetComponent<Rigidbody2D>();
+                debrisRigidbody.velocity = rigidbody2D.velocity + debrisSeparationVelocity * debrisDirection;
+                debrisRigidbody.angularVelocity = rigidbody2D.angularVelocity;
+            }
         }
 
         Vanish();
@@ -121,15 +129,26 @@ public class Asteroid : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (!gameObject.activeSelf)
+        {
+            // The asteroid can happen to collide multiple times in the same frame
+            // which could lead to Destruct() being called multiple times, so we need to prevent this.
+            return;
+        }
+
         float impactImpulse = 0f;
         foreach (ContactPoint2D point in collision.contacts)
         {
             impactImpulse += point.normalImpulse;
         }
 
-        if (impactImpulse >= minImpactImpulseForDestruction || collision.gameObject.GetComponent<Bullet>() != null)
+        if (collision.gameObject.GetComponent<Bullet>() != null)
         {
-            //Push(collision.relativeVelocity)
+            GameManager.Instance.ScoreAsteroidHit(rigidbody2D.mass);
+            Destruct();
+        }
+        else if (impactImpulse >= minImpactImpulseForDestruction)
+        {
             Destruct();
         }
     }

@@ -6,6 +6,9 @@ public class AsteroidGenerator : MonoBehaviour
     [SerializeField] private Rect spawnRect = default;
     [SerializeField] private Rect movementTargetRect = default;
 
+    /// <summary>
+    /// Specifies how many times per second the generator will spawn an asteroid.
+    /// </summary>
     public float Rate;
 
     private float lastSpawnTime = 0f;
