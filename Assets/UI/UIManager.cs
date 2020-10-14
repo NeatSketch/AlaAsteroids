@@ -1,23 +1,26 @@
 ﻿using UnityEngine;
 
-public class UIManager : MonoBehaviour
+namespace NeatSketch.AlaAsteroids
 {
-    [SerializeField] private GameObject gameOverScreen = default;
-
-    private void Awake()
+    public class UIManager : MonoBehaviour
     {
-        GameManager gameManager = GameManager.Instance;
-        gameManager.GameStarted += OnGameStarted;
-        gameManager.GameEnded += OnGameEnded;
-    }
+        [SerializeField] private GameObject gameOverScreen = default;
 
-    private void OnGameStarted()
-    {
-        gameOverScreen.SetActive(false);
-    }
+        private void Awake()
+        {
+            GameManager gameManager = GameManager.Instance;
+            gameManager.GameStarted += OnGameStarted;
+            gameManager.GameEnded += OnGameEnded;
+        }
 
-    private void OnGameEnded()
-    {
-        gameOverScreen.SetActive(true);
+        private void OnGameStarted()
+        {
+            gameOverScreen.SetActive(false);
+        }
+
+        private void OnGameEnded()
+        {
+            gameOverScreen.SetActive(true);
+        }
     }
 }

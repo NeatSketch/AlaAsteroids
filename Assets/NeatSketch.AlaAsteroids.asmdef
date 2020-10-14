@@ -1,0 +1,15 @@
+{
+    "name": "NeatSketch.AlaAsteroids",
+    "references": [
+        "GUID:60ecca4f168cd19459a17fd7fac046a5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 
-public class OutOfBoundsAsteroidCleaner : MonoBehaviour
+namespace NeatSketch.AlaAsteroids
 {
-    private void OnTriggerExit2D(Collider2D collider)
+    public class OutOfBoundsAsteroidCleaner : MonoBehaviour
     {
-        Asteroid asteroid = collider.GetComponent<Asteroid>();
-        asteroid?.Vanish();
+        private void OnTriggerExit2D(Collider2D collider)
+        {
+            Asteroid asteroid = collider.GetComponent<Asteroid>();
+            asteroid?.Vanish();
+        }
     }
 }

@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Text))]
-public class LifeCounter : MonoBehaviour
+namespace NeatSketch.AlaAsteroids
 {
-    [SerializeField] private char lifeIndicatorCharacter = default;
-
-    private Text text;
-
-    private void Awake()
+    [RequireComponent(typeof(Text))]
+    public class LifeCounter : MonoBehaviour
     {
-        text = GetComponent<Text>();
-        GameManager.Instance.NumberOfLifesChanged += OnNumberOfLifesChanged;
-    }
+        [SerializeField] private char lifeIndicatorCharacter = default;
 
-    private void OnNumberOfLifesChanged(int numberOfLifes)
-    {
-        text.text = new string(lifeIndicatorCharacter, numberOfLifes);
+        private Text text;
+
+        private void Awake()
+        {
+            text = GetComponent<Text>();
+            GameManager.Instance.NumberOfLifesChanged += OnNumberOfLifesChanged;
+        }
+
+        private void OnNumberOfLifesChanged(int numberOfLifes)
+        {
+            text.text = new string(lifeIndicatorCharacter, numberOfLifes);
+        }
     }
 }

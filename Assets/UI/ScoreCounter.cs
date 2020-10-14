@@ -2,19 +2,22 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Text))]
-public class ScoreCounter : MonoBehaviour
+namespace NeatSketch.AlaAsteroids
 {
-    private Text text;
-
-    private void Awake()
+    [RequireComponent(typeof(Text))]
+    public class ScoreCounter : MonoBehaviour
     {
-        text = GetComponent<Text>();
-        GameManager.Instance.ScoreChanged += OnScoreChanged;
-    }
+        private Text text;
 
-    private void OnScoreChanged(int score)
-    {
-        text.text = score.ToString(CultureInfo.CurrentUICulture);
+        private void Awake()
+        {
+            text = GetComponent<Text>();
+            GameManager.Instance.ScoreChanged += OnScoreChanged;
+        }
+
+        private void OnScoreChanged(int score)
+        {
+            text.text = score.ToString(CultureInfo.CurrentUICulture);
+        }
     }
 }

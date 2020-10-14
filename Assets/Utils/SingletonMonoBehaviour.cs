@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 
-public class SingletonMonoBehaviour<T> : MonoBehaviour where T : SingletonMonoBehaviour<T>
+namespace NeatSketch.UnityUtils
 {
-    public static T Instance { get; private set; }
-
-    protected virtual void Awake()
+    public class SingletonMonoBehaviour<T> : MonoBehaviour where T : SingletonMonoBehaviour<T>
     {
-        Instance = (T)this;
+        public static T Instance { get; private set; }
+
+        protected virtual void Awake()
+        {
+            Instance = (T)this;
+        }
     }
 }
