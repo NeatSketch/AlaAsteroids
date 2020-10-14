@@ -8,13 +8,13 @@ namespace NeatSketch.AlaAsteroids
     public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         [SerializeField] private GameObject shipPrefab = default;
-        [SerializeField] private int startingNumberOfLifes = default;
+        [SerializeField] private int startingNumberOfLives = default;
         [SerializeField] private float postImpactInvulnerabilityPeriod = default;
         [SerializeField] private float gameOverTimeout = default;
         [SerializeField] private AnimationCurve asteroidMassToScoreFunction = default;
 
         private Ship ship;
-        private int numberOfLifes;
+        private int numberOfLives;
         private int score;
         private bool gameIsInProgress;
 
@@ -24,9 +24,9 @@ namespace NeatSketch.AlaAsteroids
         public event Action<int> ScoreChanged;
 
         /// <summary>
-        /// Fired when the player's number of lifes is changed.
+        /// Fired when the player's number of lives is changed.
         /// </summary>
-        public event Action<int> NumberOfLifesChanged;
+        public event Action<int> NumberOfLivesChanged;
 
         /// <summary>
         /// Fired when a new game starts.
@@ -52,12 +52,12 @@ namespace NeatSketch.AlaAsteroids
             ship = shipGO.GetComponent<Ship>();
             ship.Impacted += OnShipImpacted;
 
-            numberOfLifes = startingNumberOfLifes;
+            numberOfLives = startingNumberOfLives;
             score = 0;
             gameIsInProgress = true;
 
             GameStarted?.Invoke();
-            NumberOfLifesChanged?.Invoke(numberOfLifes);
+            NumberOfLivesChanged?.Invoke(numberOfLives);
             ScoreChanged?.Invoke(score);
         }
 
@@ -77,9 +77,9 @@ namespace NeatSketch.AlaAsteroids
         /// </summary>
         private void OnShipImpacted()
         {
-            numberOfLifes -= 1;
-            NumberOfLifesChanged?.Invoke(numberOfLifes);
-            if (numberOfLifes > 0)
+            numberOfLives -= 1;
+            NumberOfLivesChanged?.Invoke(numberOfLives);
+            if (numberOfLives > 0)
             {
                 StartCoroutine(RestartLife());
             }

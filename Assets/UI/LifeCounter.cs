@@ -13,12 +13,12 @@ namespace NeatSketch.AlaAsteroids
         private void Awake()
         {
             text = GetComponent<Text>();
-            GameManager.Instance.NumberOfLifesChanged += OnNumberOfLifesChanged;
+            GameManager.Instance.NumberOfLivesChanged += OnNumberOfLivesChanged;
         }
 
-        private void OnNumberOfLifesChanged(int numberOfLifes)
+        private void OnNumberOfLivesChanged(int numberOfLives)
         {
-            text.text = new string(lifeIndicatorCharacter, numberOfLifes);
+            text.text = new string(lifeIndicatorCharacter, numberOfLives);
         }
     }
 }
